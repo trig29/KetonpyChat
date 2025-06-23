@@ -116,17 +116,15 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         const messageDiv = document.createElement('div');
-        messageDiv.className = `message ${role}-message`;
-        
+        const roleClass = role === 'assistant' ? 'ai-message' : 'user-message';
+        messageDiv.className = `message ${roleClass}`;
         const messageHeader = document.createElement('div');
         messageHeader.className = 'message-header';
         
         const icon = document.createElement('i');
-        icon.className = role === 'user' ? 'fas fa-user' : 'fas fa-robot';
-        
+        icon.className = role === 'assistant' ? 'fas fa-robot' : 'fas fa-user';
         const headerText = document.createElement('strong');
-        headerText.textContent = role === 'user' ? '您' : 'DeepSeek助手';
-        
+        headerText.textContent = role === 'assistant' ? 'DeepSeek助手' : '您';
         messageHeader.appendChild(icon);
         messageHeader.appendChild(headerText);
         
