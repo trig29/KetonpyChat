@@ -36,7 +36,8 @@ pip install -r requirements.txt
 ### 3. 启动后端服务
 
 ```bash
-python main.py
+cd ../
+python -m backend.app
 ```
 
 ### 4. 访问前端页面
