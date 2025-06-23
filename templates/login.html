@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHATBOT - 登录</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <h1>CHATBOT - Powered by Deepseek API</h1>
+            <p>请输入您的访问令牌开始对话</p>
+            
+            <form id="login-form">
+                <div class="input-group">
+                    <label for="token">User_Id</label>
+                    <input 
+                        type="password" 
+                        id="token" 
+                        name="token" 
+                        placeholder="输入您的User_Id" 
+                        required
+                        autocomplete="off"
+                    >
+                </div>
+                <button type="submit" class="btn-primary">开始对话</button>
+            </form>
+            
+            <div class="login-footer">
+                <p>© 2023 DeepSeek</p>
+            </div>
+        </div>
+    </div>
+    
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+</body>
+</html>

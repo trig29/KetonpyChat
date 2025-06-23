@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeepSeek 智能聊天助手</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="chat-container">
+        <!-- 侧边栏 -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2><i class="fas fa-robot"></i> DeepSeek</h2>
+            </div>
+            <div class="sidebar-actions">
+                <button id="new-chat-btn" class="btn-icon">
+                    <i class="fas fa-plus"></i> 新对话
+                </button>
+                <button id="reduce-history-btn" class="btn-icon">
+                    <i class="fas fa-compress"></i> 精简历史
+                </button>
+                <button id="clear-history-btn" class="btn-icon">
+                    <i class="fas fa-trash"></i> 清除历史
+                </button>
+            </div>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <i class="fas fa-user-circle"></i>
+                    <span id="user-id">用户ID: {{ session.user_id }}</span>
+                </div>
+                <button id="logout-btn" class="btn-logout">
+                    <i class="fas fa-sign-out-alt"></i> 退出
+                </button>
+            </div>
+        </div>
+
+        <!-- 主聊天区域 -->
+        <div class="main-content">
+            <div id="chat-messages" class="chat-messages">
+                <!-- 消息会动态添加到这里 -->
+                <div class="welcome-message">
+                    <h2>欢迎使用 DeepSeek 智能助手</h2>
+                    <p>开始发送消息，我将尽力回答您的问题</p>
+                    <div class="features">
+                        <div class="feature-card">
+                            <i class="fas fa-lightbulb"></i>
+                            <h3>知识丰富</h3>
+                            <p>涵盖科技、教育、生活等多领域</p>
+                        </div>
+                        <div class="feature-card">
+                            <i class="fas fa-history"></i>
+                            <h3>记忆上下文</h3>
+                            <p>智能记住对话历史，交流更顺畅</p>
+                        </div>
+                        <div class="feature-card">
+                            <i class="fas fa-bolt"></i>
+                            <h3>快速响应</h3>
+                            <p>基于强大的AI模型，回复迅速准确</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 输入区域 -->
+            <div class="input-area">
+                <div class="input-container">
+                    <textarea 
+                        id="message-input" 
+                        placeholder="输入您的问题..." 
+                        rows="1"
+                    ></textarea>
+                    <button id="send-btn" class="btn-send">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+                <div class="input-footer">
+                    <p>DeepSeek 可以生成创意内容，但也可能产生不准确的信息</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+</body>
+</html>

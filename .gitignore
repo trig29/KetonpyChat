@@ -1,0 +1,4 @@
+myenv/
+chatlogs/
+__pycache__/
+config.py
