@@ -2,3 +2,7 @@ myenv/
 chatlogs/
 __pycache__/
 config.py
+.venv/
+.idea
+.vscode
+node_modules/

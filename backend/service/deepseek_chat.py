@@ -1,5 +1,5 @@
-from config import DEEPSEEK_API_KEY, SYSTEM_PROMPT
-from history_manager import add_message, get_history
+from backend.config import DEEPSEEK_API_KEY, SYSTEM_PROMPT
+from backend.service.history_manager import add_message, get_history
 import requests
 
 DEEPSEEK_API_URL = "https://api.deepseek.com/chat/completions"

@@ -1,5 +1,5 @@
-from deepseek_chat import chat_with_deepseek
-from history_manager import reduce_history, clear_history
+from backend.service.deepseek_chat import chat_with_deepseek
+from backend.service.history_manager import reduce_history, clear_history
 
 user_id = 1
 while True:

@@ -1,7 +1,7 @@
 import os
 import json
 
-CHATLOG_DIR = "chatlogs"
+CHATLOG_DIR = "../chatlogs"
 os.makedirs(CHATLOG_DIR, exist_ok=True)
 
 def _get_chatlog_path(user_id):
@@ -34,7 +34,7 @@ def get_history(user_id):
     return load_history(user_id)
 
 def reduce_history(user_id):
-    from deepseek_chat import get_summary
+    from backend.service.deepseek_chat import get_summary
     full_history = load_history(user_id)
 
     if len(full_history) <= 10:

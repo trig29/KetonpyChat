@@ -1,10 +1,18 @@
 from flask import Flask, request, jsonify, redirect, url_for, session, render_template
-from deepseek_chat import chat_with_deepseek, get_summary
-from history_manager import clear_history, reduce_history, get_history
+from backend.service.deepseek_chat import chat_with_deepseek
+from backend.service.history_manager import clear_history, reduce_history, get_history
 import os
 
-app = Flask(__name__)
-app.secret_key = os.urandom(24)  # 生成随机密钥用于session
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+FRONTEND_DIR = os.path.abspath(os.path.join(BASE_DIR, '..', 'frontend'))
+
+app = Flask(
+    __name__,
+    static_folder=os.path.join(FRONTEND_DIR, 'static'),
+    template_folder=os.path.join(FRONTEND_DIR, 'templates'),
+    static_url_path='/static'
+)
+app.secret_key = os.urandom(24)
 
 # 登录路由 - 验证token并设置user_id
 @app.route('/login', methods=['GET', 'POST'])
