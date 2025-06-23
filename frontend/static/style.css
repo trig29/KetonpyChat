@@ -94,6 +94,27 @@ body {
     font-size: 14px;
 }
 
+/* 移动端覆盖层 */
+.mobile-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.mobile-overlay.active {
+    display: block;
+}
+
+/* 移动端聊天头部 */
+.chat-header {
+    display: none;
+}
+
 /* 主聊天页面样式 */
 .chat-container {
     display: flex;
@@ -363,18 +384,44 @@ textarea:focus {
 /* 响应式设计 */
 @media (max-width: 768px) {
     .sidebar {
-        width: 70px;
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        z-index: 1000;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+        box-shadow: 2px 0 5px rgba(0,0,0,0.2);
     }
-    
-    .sidebar-header h2 span,
-    .btn-icon span,
-    .user-info span,
-    .btn-logout span {
-        display: none;
+
+    .sidebar.open {
+        transform: translateX(0);
     }
-    
-    .btn-icon {
-        justify-content: center;
+
+    .chat-header {
+        display: flex;
+        align-items: center;
+        padding: 10px 15px;
+        background-color: #ffffff;
+        border-bottom: 1px solid #e0e0e0;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+
+    .menu-toggle-btn {
+        background: none;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+        margin-right: 15px;
+        color: #333;
+    }
+
+    .chat-header h3 {
+        font-size: 18px;
+        color: #333;
+        margin: 0;
     }
     
     .chat-messages {
@@ -388,5 +435,41 @@ textarea:focus {
     .features {
         flex-direction: column;
         align-items: center;
+    }
+
+    .welcome-message h2 {
+        font-size: 24px;
+    }
+
+    .welcome-message p {
+        font-size: 16px;
+    }
+
+    .feature-card {
+        width: 90%;
+        max-width: 300px;
+    }
+
+    .input-area {
+        padding: 10px;
+    }
+
+    .input-container {
+        gap: 8px;
+    }
+
+    textarea {
+        padding: 12px;
+    }
+
+    .btn-send {
+        width: 45px;
+        height: 45px;
+        font-size: 16px;
+    }
+
+    .login-card {
+        width: 90%;
+        padding: 30px;
     }
 }

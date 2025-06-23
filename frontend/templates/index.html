@@ -12,17 +12,17 @@
         <!-- 侧边栏 -->
         <div class="sidebar">
             <div class="sidebar-header">
-                <h2><i class="fas fa-robot"></i> DeepSeek</h2>
+                <h2><i class="fas fa-robot"></i> <span>DeepSeek</span></h2>
             </div>
             <div class="sidebar-actions">
                 <button id="new-chat-btn" class="btn-icon">
-                    <i class="fas fa-plus"></i> 新对话
+                    <i class="fas fa-plus"></i> <span>新对话</span>
                 </button>
                 <button id="reduce-history-btn" class="btn-icon">
-                    <i class="fas fa-compress"></i> 精简历史
+                    <i class="fas fa-compress"></i> <span>精简历史</span>
                 </button>
                 <button id="clear-history-btn" class="btn-icon">
-                    <i class="fas fa-trash"></i> 清除历史
+                    <i class="fas fa-trash"></i> <span>清除历史</span>
                 </button>
             </div>
             <div class="sidebar-footer">
@@ -31,13 +31,20 @@
                     <span id="user-id">用户ID: {{ session.user_id }}</span>
                 </div>
                 <button id="logout-btn" class="btn-logout">
-                    <i class="fas fa-sign-out-alt"></i> 退出
+                    <i class="fas fa-sign-out-alt"></i> <span>退出</span>
                 </button>
             </div>
         </div>
+        <div class="mobile-overlay"></div>
 
         <!-- 主聊天区域 -->
         <div class="main-content">
+            <div class="chat-header">
+                <button id="menu-toggle" class="menu-toggle-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h3>DeepSeek 助手</h3>
+            </div>
             <div id="chat-messages" class="chat-messages">
                 <!-- 消息会动态添加到这里 -->
                 <div class="welcome-message">

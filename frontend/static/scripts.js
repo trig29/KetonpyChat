@@ -41,7 +41,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const reduceHistoryBtn = document.getElementById('reduce-history-btn');
     const newChatBtn = document.getElementById('new-chat-btn');
     const logoutBtn = document.getElementById('logout-btn');
-    
+    const menuToggleBtn = document.getElementById('menu-toggle');
+    const sidebar = document.querySelector('.sidebar');
+    const mobileOverlay = document.querySelector('.mobile-overlay');
+
     if (messageInput) {
         // 自动调整输入框高度
         messageInput.addEventListener('input', function() {
@@ -106,7 +109,21 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-    
+
+    if (menuToggleBtn) {
+        function closeMenu() {
+            sidebar.classList.remove('open');
+            mobileOverlay.classList.remove('active');
+        }
+
+        menuToggleBtn.addEventListener('click', function() {
+            sidebar.classList.toggle('open');
+            mobileOverlay.classList.toggle('active');
+        });
+
+        mobileOverlay.addEventListener('click', closeMenu);
+    }
+
     // 添加消息到UI
     function addMessageToUI(role, content) {
         // 移除欢迎消息
