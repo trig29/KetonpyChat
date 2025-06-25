@@ -1,4 +1,60 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // ==================================================================
+    // 定义和启用 marked.js 的 LaTeX 扩展
+    // ==================================================================
+    if (window.marked && window.katex) {
+        const latexExtension = {
+            name: 'latex',
+            level: 'inline', // 处理行内和块级
+            
+            // Tokenizer: 用于识别 LaTeX 语法的正则表达式
+            tokenizer(src) {
+                // 块级公式 $$...$$
+                const blockRule = /^\s*\$\$((?:[^\$]|\$[^\$])+?)\$\$\s*(?:\n|$)/;
+                let match = blockRule.exec(src);
+                if (match) {
+                    return {
+                        type: 'latex',
+                        raw: match[0],
+                        text: match[1].trim(),
+                        displayMode: true // 标记为块级显示
+                    };
+                }
+
+                // 行内公式 $...$
+                const inlineRule = /^\$((?:[^\$]|\$[^\$])+?)\$/;
+                match = inlineRule.exec(src);
+                if (match) {
+                    return {
+                        type: 'latex',
+                        raw: match[0],
+                        text: match[1].trim(),
+                        displayMode: false // 标记为行内显示
+                    };
+                }
+            },
+            
+            // Renderer: 将识别到的 token 转换为 HTML
+            renderer(token) {
+                try {
+                    // 调用 KaTeX 将 LaTeX 字符串渲染为 HTML
+                    return katex.renderToString(token.text, {
+                        displayMode: token.displayMode,
+                        throwOnError: false // 非常重要：如果公式有错，不抛出异常，而是显示错误信息
+                    });
+                } catch (e) {
+                    console.error('KaTeX rendering error:', e);
+                    // 如果渲染出错，返回原始文本并附带错误提示
+                    return `<span style="color: red;">LaTeX Error: ${e.message}</span><br><code>${token.raw}</code>`;
+                }
+            }
+        };
+
+        // 将扩展应用到 marked
+        marked.use({ extensions: [latexExtension] });
+    }
+    // ==================================================================
+
     // 登录页面逻辑
     const loginForm = document.getElementById('login-form');
     if (loginForm) {
@@ -124,6 +180,7 @@ document.addEventListener('DOMContentLoaded', function() {
         mobileOverlay.addEventListener('click', closeMenu);
     }
 
+/*  旧函数
     // 添加消息到UI
     function addMessageToUI(role, content) {
         // 移除欢迎消息
@@ -157,7 +214,51 @@ document.addEventListener('DOMContentLoaded', function() {
         // 滚动到底部
         chatMessages.scrollTop = chatMessages.scrollHeight;
     }
-    
+*/
+    // 添加消息到UI（支持Markdown版本）
+    function addMessageToUI(role, content) {
+    // 移除欢迎消息
+        const welcomeMessage = document.querySelector('.welcome-message');
+        if (welcomeMessage) {
+            welcomeMessage.remove();
+        }
+
+        const messageDiv = document.createElement('div');
+        const roleClass = role === 'assistant' ? 'ai-message' : 'user-message';
+        messageDiv.className = `message ${roleClass}`;
+        const messageHeader = document.createElement('div');
+        messageHeader.className = 'message-header';
+
+        const icon = document.createElement('i');
+        icon.className = role === 'assistant' ? 'fas fa-robot' : 'fas fa-user';
+        const headerText = document.createElement('strong');
+        headerText.textContent = role === 'assistant' ? 'DeepSeek助手' : '您';
+        messageHeader.appendChild(icon);
+        messageHeader.appendChild(headerText);
+
+        const messageContent = document.createElement('div');
+        messageContent.className = 'message-content';
+
+        // --- 修改开始 ---
+        if (role === 'assistant') {
+            // 1. 使用 marked.js 将 Markdown 字符串解析为 HTML
+            const unsafeHtml = marked.parse(content);
+            // 2. 使用 DOMPurify 清理 HTML，防止 XSS 攻击
+            messageContent.innerHTML = DOMPurify.sanitize(unsafeHtml);
+        } else {
+            // 用户的消息仍然使用 textContent，以纯文本显示
+            messageContent.textContent = content;
+        }
+        // --- 修改结束 ---
+
+        messageDiv.appendChild(messageHeader);
+        messageDiv.appendChild(messageContent);
+
+        chatMessages.appendChild(messageDiv);
+
+        // 滚动到底部
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
     // 添加加载指示器
     function addLoadingIndicator() {
         const loadingDiv = document.createElement('div');

@@ -473,3 +473,103 @@ textarea:focus {
         padding: 30px;
     }
 }
+
+/* Markdown消息内容样式 */
+
+/* ================================================================== */
+/* 优化版 Markdown 渲染样式 (解决拥挤问题)              */
+/* ================================================================== */
+
+/* 基础: 让消息内容区的空白符行为恢复正常 */
+.message-content {
+    white-space: normal; 
+}
+
+
+.message-content p,
+.message-content ul,
+.message-content ol,
+.message-content blockquote {
+    margin-top: 0;
+    margin-bottom: 16px; /* 为标准段落提供 16px 的下间距 */
+}
+
+.message-content h1,
+.message-content h2,
+.message-content h3,
+.message-content h4 {
+    margin-top: 24px;  /* 顶部留出更多空间 */
+    margin-bottom: 12px; /* 和下方内容保持一个较小的间距 */
+}
+
+
+.message-content pre {
+    margin-top: 20px;    /* 增加上边距 */
+    margin-bottom: 20px; /* 增加下边距 */
+    background-color: #2d2d2d;
+    color: #f1f1f1;
+    padding: 16px;
+    border-radius: 8px;
+    overflow-x: auto;
+    white-space: pre;
+}
+
+
+.message-content hr {
+    margin-top: 28px;    /* 增加上边距 */
+    margin-bottom: 28px; /* 增加下边距 */
+    border: none;
+    border-top: 2px solid #e0e0e0; /* 让分割线更清晰一点 */
+}
+
+/* 列表样式 */
+.message-content ul, .message-content ol {
+    padding-left: 25px;
+}
+
+/* 引用块样式 */
+.message-content blockquote {
+    border-left: 4px solid #ddd;
+    padding-left: 15px;
+    color: #555;
+    margin-left: 0;
+}
+
+/* 行内代码样式 (<code>) */
+.message-content code {
+    font-family: Consolas, 'Courier New', monospace;
+    background-color: rgba(0, 0, 0, 0.06);
+    padding: 3px 5px;
+    border-radius: 4px;
+}
+
+/* 修正 <pre> 中 <code> 的样式，避免双重样式 */
+.message-content pre code {
+    background-color: transparent;
+    padding: 0;
+    border-radius: 0;
+    color: inherit;
+}
+
+/* 表格样式 */
+.message-content table {
+    width: auto;
+    border-collapse: collapse;
+    margin-bottom: 16px;
+}
+.message-content th, .message-content td {
+    border: 1px solid #ddd;
+    padding: 8px 12px;
+}
+.message-content th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+/*
+ * 这个规则非常重要：移除消息气泡内最后一个元素的底部边距。
+ * 这样可以防止气泡底部有多余的空白，让气泡大小能紧密包裹内容。
+ */
+.message-content > *:last-child {
+    margin-bottom: 0 !important;
+}
