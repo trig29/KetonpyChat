@@ -1,7 +1,7 @@
 import os
 import json
 
-CHATLOG_DIR = "../chatlogs"
+CHATLOG_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "chatlogs"))
 os.makedirs(CHATLOG_DIR, exist_ok=True)
 
 def _get_chatlog_path(user_id):
