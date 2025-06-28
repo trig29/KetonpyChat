@@ -2,6 +2,8 @@ from flask import Flask, request, jsonify, redirect, url_for, session, render_te
 from backend.service.deepseek_chat import chat_with_deepseek
 from backend.service.history_manager import clear_history, reduce_history, get_history
 import os
+import hmac
+import hashlib
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 FRONTEND_DIR = os.path.abspath(os.path.join(BASE_DIR, '..', 'frontend'))
@@ -13,6 +15,27 @@ app = Flask(
     static_url_path='/static'
 )
 app.secret_key = os.urandom(24)
+
+# Webhook自动部署路由
+@app.route('/webhook', methods=['POST'])
+def webhook():
+    # 验证签名
+    secret = "yarinokoshitakodoukonoyowootte1111".encode('utf-8')
+    signature = request.headers.get('X-Hub-Signature-256', '').split('sha256=')[-1].strip()
+    payload = request.data
+    
+    # 计算签名
+    computed_signature = hmac.new(secret, payload, hashlib.sha256).hexdigest()
+    
+    if not hmac.compare_digest(signature, computed_signature):
+        return jsonify({"error": "Invalid signature"}), 403
+    
+    # 执行部署脚本
+    try:
+        subprocess.run(["/var/www/KetonpyChat/deploy.sh"], check=True)
+        return jsonify({"status": "success"}), 200
+    except subprocess.CalledProcessError as e:
+        return jsonify({"error": str(e)}), 500
 
 # 登录路由 - 验证token并设置user_id
 @app.route('/login', methods=['GET', 'POST'])
