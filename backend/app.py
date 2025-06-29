@@ -14,13 +14,15 @@ app = Flask(
     template_folder=os.path.join(FRONTEND_DIR, 'templates'),
     static_url_path='/static'
 )
-app.secret_key = os.urandom(24)
+app.secret_key = os.environ.get('SECRET_KEY', '31415926ssssbbbb')
+
+WEBHOOK_SECRET = os.environ.get('WEBHOOK_SECRET', '111').encode('utf-8')
 
 # Webhook自动部署路由
 @app.route('/webhook', methods=['POST'])
 def webhook():
     # 验证签名
-    secret = "yarinokoshitakodoukonoyowootte1111".encode('utf-8')
+    secret = WEBHOOK_SECRET
     signature = request.headers.get('X-Hub-Signature-256', '').split('sha256=')[-1].strip()
     payload = request.data
     

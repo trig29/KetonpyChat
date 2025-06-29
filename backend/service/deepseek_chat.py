@@ -1,8 +1,10 @@
-from backend.config import DEEPSEEK_API_KEY, SYSTEM_PROMPT
+from backend.config import Config
 from backend.service.history_manager import add_message, get_history
 import requests
 
 DEEPSEEK_API_URL = "https://api.deepseek.com/chat/completions"
+DEEPSEEK_API_KEY = Config.DEEPSEEK_API_KEY
+SYSTEM_PROMPT = Config.SYSTEM_PROMPT
 
 def build_messages(system_prompt, history, user_message):
     messages = []
