@@ -1,7 +1,7 @@
 from backend.service.deepseek_chat import chat_with_deepseek
 from backend.service.history_manager import reduce_history, clear_history
 
-user_id = 2
+user_id = 1
 while True:
     print("请选择操作: 1-正常聊天 2-精简聊天记录 3-清理聊天记录 4-切换用户 5-结束运行")
     choice = input("输入选项: ")
