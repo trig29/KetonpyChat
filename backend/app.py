@@ -4,6 +4,7 @@ from backend.service.history_manager import clear_history, reduce_history, get_h
 import os
 import hmac
 import hashlib
+import subprocess
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 FRONTEND_DIR = os.path.abspath(os.path.join(BASE_DIR, '..', 'frontend'))
